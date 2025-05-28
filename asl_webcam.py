@@ -47,7 +47,8 @@ class ASLDetectorApp:
             on_clear_word=self.clear_word,
             on_submit_word=self.submit_word,
             on_clear_history=self.clear_history,
-            on_backspace=self.backspace_word
+            on_backspace=self.backspace_word,
+            on_confidence_change=self.on_confidence_change
         )
         
         # Initialize available webcams
@@ -210,6 +211,11 @@ class ASLDetectorApp:
         
         # Schedule next frame update
         self.root.after(10, self.update_frame)
+    
+    def on_confidence_change(self, value):
+        """Handle confidence threshold changes"""
+        self.CONF_TH = value
+        self.gui.update_status(f"Confidence threshold set to {value:.2f}")
     
     def run(self):
         """Start the application"""

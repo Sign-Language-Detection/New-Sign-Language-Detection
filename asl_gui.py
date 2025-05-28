@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 import cv2
 
 class ASLDetectorGUI:
-    def __init__(self, root, on_webcam_change, on_toggle_detection, on_clear_word, on_submit_word, on_clear_history, on_backspace):
+    def __init__(self, root, on_webcam_change, on_toggle_detection, on_clear_word, on_submit_word, on_clear_history, on_backspace, on_confidence_change):
         self.root = root
         self.root.title("ASL Detector")
         
@@ -24,6 +24,7 @@ class ASLDetectorGUI:
         self.on_submit_word = on_submit_word
         self.on_clear_history = on_clear_history
         self.on_backspace = on_backspace
+        self.on_confidence_change = on_confidence_change
         
         # Initialize variables
         self.video_frame = None
@@ -32,6 +33,7 @@ class ASLDetectorGUI:
         self.start_button = None
         self.word_var = None
         self.history_text = None
+        self.confidence_var = None
         
         # Create main container
         self.main_container = ttk.Frame(self.root)
@@ -55,6 +57,24 @@ class ASLDetectorGUI:
         # Start/Stop button
         self.start_button = ttk.Button(control_frame, text="Start", command=self._on_toggle_detection)
         self.start_button.pack(side=tk.LEFT, padx=5)
+        
+        # Confidence threshold slider
+        ttk.Label(control_frame, text="Confidence:").pack(side=tk.LEFT, padx=5)
+        self.confidence_var = tk.DoubleVar(value=0.83)
+        confidence_slider = ttk.Scale(
+            control_frame,
+            from_=0.01,
+            to=1.00,
+            orient=tk.HORIZONTAL,
+            variable=self.confidence_var,
+            length=150,
+            command=self._on_confidence_change
+        )
+        confidence_slider.pack(side=tk.LEFT, padx=5)
+        
+        # Confidence value label
+        self.confidence_label = ttk.Label(control_frame, text="0.83")
+        self.confidence_label.pack(side=tk.LEFT, padx=5)
         
         # Word Frame
         word_frame = ttk.LabelFrame(self.main_container, text="Spelling", padding="5")
@@ -118,6 +138,12 @@ class ASLDetectorGUI:
     
     def _on_backspace(self):
         self.on_backspace()
+    
+    def _on_confidence_change(self, *args):
+        """Handle confidence threshold changes"""
+        value = self.confidence_var.get()
+        self.confidence_label.config(text=f"{value:.2f}")
+        self.on_confidence_change(value)
     
     def update_video_frame(self, frame):
         """Update the video frame with a new image"""
