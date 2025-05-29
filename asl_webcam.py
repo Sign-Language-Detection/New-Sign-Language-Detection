@@ -14,7 +14,7 @@ from datetime import datetime
 class ASLDetectorApp:
     def __init__(self):
         # --- configuration ---
-        self.WEIGHTS = "weights/internet_data.pt"
+        self.WEIGHTS = "weights/internet_model.pt"
         self.CONF_TH = 0.83
         self.FONT = cv2.FONT_HERSHEY_SIMPLEX
         self.COL_LABEL = (0, 255, 0)
