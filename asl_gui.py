@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 import cv2
 
 class ASLDetectorGUI:
-    def __init__(self, root, on_webcam_change, on_toggle_detection, on_clear_word, on_submit_word, on_clear_history, on_backspace, on_confidence_change):
+    def __init__(self, root, on_webcam_change, on_toggle_detection, on_clear_word, on_submit_word, on_clear_history, on_backspace, on_confidence_change, on_space):
         self.root = root
         self.root.title("ASL Detector")
         
@@ -25,6 +25,7 @@ class ASLDetectorGUI:
         self.on_clear_history = on_clear_history
         self.on_backspace = on_backspace
         self.on_confidence_change = on_confidence_change
+        self.on_space = on_space
         
         # Initialize variables
         self.video_frame = None
@@ -89,6 +90,9 @@ class ASLDetectorGUI:
         back_button = ttk.Button(word_frame, text="Back", command=self._on_backspace)
         back_button.pack(side=tk.LEFT, padx=5)
         
+        space_button = ttk.Button(word_frame, text="Space", command=self._on_space)
+        space_button.pack(side=tk.LEFT, padx=5)
+        
         clear_button = ttk.Button(word_frame, text="Clear", command=self._on_clear_word)
         clear_button.pack(side=tk.LEFT, padx=5)
         
@@ -144,6 +148,10 @@ class ASLDetectorGUI:
         value = self.confidence_var.get()
         self.confidence_label.config(text=f"{value:.2f}")
         self.on_confidence_change(value)
+    
+    def _on_space(self):
+        """Handle space button click"""
+        self.on_space()
     
     def update_video_frame(self, frame):
         """Update the video frame with a new image"""

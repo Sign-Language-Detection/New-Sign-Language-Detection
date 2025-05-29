@@ -45,7 +45,8 @@ class ASLDetectorApp:
             on_submit_word=self.submit_word,
             on_clear_history=self.clear_history,
             on_backspace=self.backspace_word,
-            on_confidence_change=self.on_confidence_change
+            on_confidence_change=self.on_confidence_change,
+            on_space=self.add_space
         )
         
         # Initialize available webcams
@@ -212,6 +213,12 @@ class ASLDetectorApp:
         """Handle confidence threshold changes from GUI"""
         self.CONF_TH = value
         self.gui.update_status(f"Confidence threshold set to {value:.2f}")
+    
+    def add_space(self):
+        """Add a space to the current word"""
+        self.current_word += " "
+        self.gui.update_word(self.current_word)
+        self.gui.update_status("Added space")
     
     def run(self):
         """Start the application main loop"""
