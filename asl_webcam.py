@@ -55,7 +55,7 @@ class ASLDetectorApp:
         """Find and list all available webcams"""
         available_webcams = []
         for i in range(10):  # Check first 10 indices
-            cap = cv2.VideoCapture(i, cv2.CAP_DSHOW)
+            cap = cv2.VideoCapture(i)
             if cap.isOpened():
                 available_webcams.append(f"Webcam {i}")
                 cap.release()
@@ -66,7 +66,7 @@ class ASLDetectorApp:
         if self.is_running:
             self.stop_detection()
         
-        self.cap = cv2.VideoCapture(webcam_index, cv2.CAP_DSHOW)
+        self.cap = cv2.VideoCapture(webcam_index)
         if not self.cap.isOpened():
             self.gui.update_status(f"Error: Could not open webcam {webcam_index}")
             return
@@ -86,7 +86,7 @@ class ASLDetectorApp:
             if webcam_index is None:
                 self.gui.update_status("Please select a webcam first")
                 return
-            self.cap = cv2.VideoCapture(webcam_index, cv2.CAP_DSHOW)
+            self.cap = cv2.VideoCapture(webcam_index)
             if not self.cap.isOpened():
                 self.gui.update_status(f"Error: Could not open webcam {webcam_index}")
                 return
