@@ -15,7 +15,7 @@ class ASLDetectorApp:
     def __init__(self):
         # --- configuration ---
         self.WEIGHTS = "weights/mixed_v3.pt"  # Path to the trained YOLO model
-        self.CONF_TH = 0.60  # Confidence threshold for detection (60%)
+        self.CONF_TH = 0.83  # Confidence threshold for detection (60%)
         self.FONT = cv2.FONT_HERSHEY_SIMPLEX  # Font for text display
         self.COL_LABEL = (0, 255, 0)  # Green color for labels (BGR format)
         self.COL_BOX = (0, 255, 255)  # Yellow color for bounding boxes (BGR format)
