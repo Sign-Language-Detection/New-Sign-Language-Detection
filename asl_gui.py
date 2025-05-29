@@ -147,7 +147,9 @@ class ASLDetectorGUI:
     
     def update_video_frame(self, frame):
         """Update the video frame with a new image"""
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Resize frame to 640x480 before displaying
+        frame_resized = cv2.resize(frame, (640, 480))
+        frame_rgb = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB)
         img = Image.fromarray(frame_rgb)
         imgtk = ImageTk.PhotoImage(image=img)
         self.video_frame.imgtk = imgtk
