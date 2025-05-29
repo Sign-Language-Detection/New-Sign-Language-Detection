@@ -3,7 +3,6 @@ Real-time ASL-letter detector
 ——————————————
  • Requires:  ultralytics, opencv-python, tkinter, pillow
  • Usage:    python asl_webcam.py
- • Keys:     Esc - quit
 """
 
 from ultralytics import YOLO
@@ -196,12 +195,6 @@ class ASLDetectorApp:
         
         # Update GUI
         self.gui.update_video_frame(frame)
-        
-        # Check for key presses
-        key = cv2.waitKey(1) & 0xFF
-        if key == 27:  # Esc
-            self.stop_detection()
-            return
         
         # Schedule next frame update
         self.root.after(10, self.update_frame)
