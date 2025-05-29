@@ -14,17 +14,11 @@ from datetime import datetime
 class ASLDetectorApp:
     def __init__(self):
         # --- configuration ---
-        self.WEIGHTS = "weights/internet_model_v1.pt"  # Path to the trained YOLO model
-        self.CONF_TH = 0.83  # Confidence threshold for detection (83%)
+        self.WEIGHTS = "weights/mixed_v3.pt"  # Path to the trained YOLO model
+        self.CONF_TH = 0.83  # Confidence threshold for detection (60%)
         self.FONT = cv2.FONT_HERSHEY_SIMPLEX  # Font for text display
         self.COL_LABEL = (0, 255, 0)  # Green color for labels (BGR format)
         self.COL_BOX = (0, 255, 255)  # Yellow color for bounding boxes (BGR format)
-        
-        # FPS calculation variables
-        self.frame_count = 0
-        self.fps = 0
-        self.fps_start_time = time.time()
-        self.fps_update_interval = 1.0  # Update FPS every second
         
         # Word spelling configuration
         self.HOLD_TIME = 1.0  # Time in seconds to hold a sign before adding to word
@@ -208,20 +202,6 @@ class ASLDetectorApp:
             
             # Handle letter detection for word spelling
             self.handle_letter_detection(letter, score)
-        
-        # Calculate and display FPS
-        self.frame_count += 1
-        current_time = time.time()
-        elapsed_time = current_time - self.fps_start_time
-        
-        if elapsed_time >= self.fps_update_interval:
-            self.fps = self.frame_count / elapsed_time
-            self.frame_count = 0
-            self.fps_start_time = current_time
-        
-        # Draw FPS on frame
-        fps_text = f"FPS: {self.fps:.1f}"
-        cv2.putText(frame, fps_text, (10, 30), self.FONT, 1, (0, 255, 0), 2, cv2.LINE_AA)
         
         # Update GUI with processed frame
         self.gui.update_video_frame(frame)
