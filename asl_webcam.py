@@ -4,7 +4,6 @@ Real-time ASL-letter detector
  • Requires:  ultralytics, opencv-python, tkinter, pillow
  • Usage:    python asl_webcam.py
  • Keys:     Esc - quit
-             s - save current frame to ./snaps/
 """
 
 from ultralytics import YOLO
@@ -30,7 +29,6 @@ class ASLDetectorApp:
         self.word_history = []  # Store history of spelled words
         
         # Create directories
-        os.makedirs("snaps", exist_ok=True)
         os.makedirs("words", exist_ok=True)
         
         # Initialize variables
@@ -204,10 +202,6 @@ class ASLDetectorApp:
         if key == 27:  # Esc
             self.stop_detection()
             return
-        elif key == ord('s'):
-            ts = time.strftime("%Y%m%d-%H%M%S")
-            cv2.imwrite(f"snaps/frame_{ts}.jpg", frame)
-            self.gui.update_status(f"Saved snaps/frame_{ts}.jpg")
         
         # Schedule next frame update
         self.root.after(10, self.update_frame)
