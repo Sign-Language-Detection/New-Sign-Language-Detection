@@ -94,7 +94,7 @@ class ASLDetectorApp:
         
         self.is_running = True
         self.gui.update_start_button(True)
-        self.gui.update_status("Detection running - Press 's' to save frame, Esc to quit")
+        self.gui.update_status("Detection is running")
         self.update_frame()
     
     def stop_detection(self):
