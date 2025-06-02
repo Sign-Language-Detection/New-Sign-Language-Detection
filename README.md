@@ -23,8 +23,8 @@ A real-time American Sign Language (ASL) letter detection application that uses 
 
 1. Clone this repository:
 ```bash
-git clone [repository-url]
-cd [repository-name]
+git clone https://github.com/Sign-Language-Detection/New-Sign-Language-Detection
+cd New-Sign-Language-Detection
 ```
 
 2. Install the required packages:
